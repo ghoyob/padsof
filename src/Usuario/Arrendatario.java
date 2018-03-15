@@ -1,3 +1,5 @@
+package Usuario;
+
 /**
  * @author Aurora Perez y Guillermo Hoyo
  *
@@ -24,7 +26,7 @@ public class Arrendatario extends Registrado{
 	
 	public void setNumTarjeta(String numTarjeta){
 	    if(numTarjeta == null){
-	        System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
+	        System.out.println("Error en el numero de la tarjeta en set en Usuario.Arrendatario.");
 			return; 
 	    }
 	    
@@ -38,7 +40,7 @@ public class Arrendatario extends Registrado{
 	
 	public void setOferta(Oferta oferta){
 	    if(oferta == null){
-	        System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
+	        System.out.println("Error en el numero de la tarjeta en set en Usuario.Arrendatario.");
 	    }
 	    
 		this.oferta=oferta;

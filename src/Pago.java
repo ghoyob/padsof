@@ -1,3 +1,6 @@
+import Usuario.Arrendatario;
+import Usuario.Registrado;
+
 /**
  * @author Aurora Perez y Guillermo Hoyo
  *
@@ -29,7 +32,7 @@ public class Pago{
         
         else{
             if (r.getBloqueado() == false){
-                System.out.println("Usuario bloqueado.");
+                System.out.println("Usuario.Usuario bloqueado.");
                 r.getBloqueado() = true;
                 return;
             }

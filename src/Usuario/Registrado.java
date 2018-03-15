@@ -1,3 +1,5 @@
+package Usuario;
+
 /**
  * @author Aurora Perez y Guillermo Hoyo
  *
@@ -47,7 +49,7 @@ public abstract class Registrado extends Usuario{
 	    
 	    if(r.bloqueado == true){
 	    	r.bloqueado = false;
-	    	System.out.println("Usuario desbloqueado.");
+	    	System.out.println("Usuario.Usuario desbloqueado.");
 	    	return;
 	    }
 	    

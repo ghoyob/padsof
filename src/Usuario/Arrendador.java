@@ -1,3 +1,5 @@
+package Usuario;
+
 import java.util.*;
 
 /**
@@ -26,7 +28,7 @@ public class Arrendador extends Registrado{
 
 	public void setNumTarjeta(String numTarjeta){
 	    if(numTarjeta == null){
-	        System.out.println("Error en el numero de la tarjeta en set en Arrendador.");
+	        System.out.println("Error en el numero de la tarjeta en set en Usuario.Arrendador.");
 			return; 
 	    }
 		this.numTarjeta=numTarjeta;

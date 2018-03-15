@@ -1,3 +1,7 @@
+import Usuario.Arrendatario;
+import Usuario.Gerente;
+import Usuario.Registrado;
+
 import java.util.*;
 
 /**
