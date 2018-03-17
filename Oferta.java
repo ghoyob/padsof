@@ -7,31 +7,31 @@ import java.util.*;
 
 
 public class Oferta{
-    
-    //private static final Class<Valoracion[]>[] Valoracion = null;
+
+	//private static final Class<Valoracion[]>[] Valoracion = null;
 	private String nombreOferta;
-    private int idVivienda;
-    private int CP;
-    private int numHabitaciones;
-    private String localidad;
-    private int precio;
-    private int fianza;
-    private String descripcion;
-    private TipoVivienda tipoVivienda;
-    private ArrayList<Valoracion> valoraciones; /*mirar lo de arraylist*/
-    private ArrayList<Comentario> comentarios; /*recursividad, solo un comentario, y cada comentario tiene un comentario*/
-    private Fecha fechaIni;
-    private Fecha fechaFin;
-    private Boolean reservada;
-    private Boolean alquilada;
-    private EstadoOferta estado;
-    
-    
-    /*private boolean aceptada;*/
-    
-    public Oferta(String nombreOferta,int idVivienda, int CP, int numHabitaciones, String localidad, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Valoracion valoracion, Comentario comentario, Fecha fechaIni, Fecha fechaFin) {
-	    
-		this.nombre_oferta = nombre_oferta;
+	private int idVivienda;
+	private int CP;
+	private int numHabitaciones;
+	private String localidad;
+	private int precio;
+	private int fianza;
+	private String descripcion;
+	private TipoVivienda tipoVivienda;
+	private Valoracion valoraciones; /*mirar lo de arraylist*/
+	private ArrayList<Comentario> comentarios; /*recursividad, solo un comentario, y cada comentario tiene un comentario*/
+	private Fecha fechaIni;
+	private Fecha fechaFin;
+	private Boolean reservada;
+	private Boolean alquilada;
+	private EstadoOferta estado;
+
+
+	/*private boolean aceptada;*/
+
+	public Oferta(String nombreOferta,int idVivienda, int CP, int numHabitaciones, String localidad, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Fecha fechaIni, Fecha fechaFin) {
+
+		this.nombre_oferta = nombreOferta;
 		this.idVivienda = idVivienda;
 		this.CP = CP;
 		this.numHabitaciones = numHabitaciones;
@@ -42,85 +42,225 @@ public class Oferta{
 		this.tipoVivienda = tipoVivienda;
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
-		this.valoraciones = new ArrayList<Valoracion>();
-		this.comentarios = new ArrayList<Comentario>();
-		this.reservada = false;
-		this.alquilada = false;
-		this.estado = PENDIENTE;
+		comentarios = new ArrayList<Comentario>();
+		reservada = false;
+		alquilada = false;
+		estado = PENDIENTE;
 	}
-	
+
 	public boolean isCPValido(){
 		if(CP == null) return false;
-		
+
 		if(CP<100000 && CP >00000){
-			return true;	
+			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean isLocalidadValida(){
 		if(localidad == null) return false;
 		else return true;
 	}
-	
-	public Boolean reservarOferta(Oferta o, Arrendatario a){
-		if(o.alquilada == true || o.reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
+
+	public Boolean reservarOferta(Arrendatario a){
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
 			throw new IllegalArgumentException("Fallo en la reserva");
 			return false;
 		}
 		else{
-			o.reservada = true;
+			reservada = true;
 			a.setOferta(oferta);
 			System.out.println("Oferta Reservada, dispone de un plazo de 5 días.");
 			return true;
 		}
 	}
-	
-	public Boolean alquilarOferta(Oferta o, Registrado r){
-		if(o.alquilada == true || o.reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
+
+	public Boolean alquilarOferta(Registrado r){
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
 			throw new IllegalArgumentException("Fallo en el alquiler");
 			return false;
 		}
 		else{
-			o.alquilada = true;
+			alquilada = true;
 			a.setOferta(oferta);
 			System.out.println("Oferta Alquilada, disfrute de su estancia.");
 			return true
 		}
 	}
-	
-	public Boolean aprobarOferta (Oferta o, Gerente g){
-		if(o == null || g.getTipoUsuario() != GERENTE){
+
+	public Boolean aprobarOferta (Gerente g){
+		if(g.getTipoUsuario() != GERENTE){
 			throw new IllegalArgumentException("oferta incorrecta");
 			return false;
 		}
-		
+
 		if(isCPValido()==true && numHabitaciones>0 && isLocalidadValida()==true && precio>0 && fianza>0 && descripcion != null && nombreOferta != null){
+			estado=ACEPTADA;
 			return true;
 		}
-		cambiarOferta(o);
 		return false;
 	}
-	
-	public Boolean rechazarOferta (Oferta o){
-		return false;
-    }
-    
-	public Boolean cambiarOferta (Oferta o){
+
+	public Boolean rechazarOferta (){
+		estado = RECHAZADA;
 		return false;
 	}
-	
-	public Boolean añadirOferta(){
+
+	public Boolean cambiarOferta (){
+		estado = CAMBIO;
 		return false;
 	}
-	
-	/*public String ProponerCambio (Oferta o){
-		return "klk";
-	}*/
-	
-	public int CalcularBeneficio (Oferta o){
+
+	public int CalcularBeneficio (){
 		return beneficio;
-	    
+
 	}
-	
+
+	public Boolean addComentario(Comentario comentario){
+		if(comentario == null){
+			throw new IllegalArgumentException("comentario incorrecto");
+		}
+
+		comentarios.add(comentario);
+		System.out.println("Comentario añadido.");
+		return true;
+	}
+
+	public Boolean valorarOferta(int valor){
+		if(valor>6 || valor<1){
+			throw new IllegalArgumentException("valor incorrecta");
+			return false;
+		}
+
+		valoracion.Valorar(valor);
+		return true;
+	}
+
+	public String getNombreOferta() {
+		return nombreOferta;
+	}
+
+	public void setNombreOferta(String nombreOferta) {
+		this.nombreOferta = nombreOferta;
+	}
+
+	public int getIdVivienda() {
+		return idVivienda;
+	}
+
+	public void setIdVivienda(int idVivienda) {
+		this.idVivienda = idVivienda;
+	}
+
+	public int getCP() {
+		return CP;
+	}
+
+	public void setCP(int CP) {
+		this.CP = CP;
+	}
+
+	public int getNumHabitaciones() {
+		return numHabitaciones;
+	}
+
+	public void setNumHabitaciones(int numHabitaciones) {
+		this.numHabitaciones = numHabitaciones;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public int getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.precio = precio;
+	}
+
+	public int getFianza() {
+		return fianza;
+	}
+
+	public void setFianza(int fianza) {
+		this.fianza = fianza;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public TipoVivienda getTipoVivienda() {
+		return tipoVivienda;
+	}
+
+	public void setTipoVivienda(TipoVivienda tipoVivienda) {
+		this.tipoVivienda = tipoVivienda;
+	}
+
+	public Valoracion getValoraciones() {
+		return valoraciones;
+	}
+
+	public void setValoraciones(Valoracion valoraciones) {
+		this.valoraciones = valoraciones;
+	}
+
+	public ArrayList<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(ArrayList<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Fecha getFechaIni() {
+		return fechaIni;
+	}
+
+	public void setFechaIni(Fecha fechaIni) {
+		this.fechaIni = fechaIni;
+	}
+
+	public Fecha getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Fecha fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public Boolean getReservada() {
+		return reservada;
+	}
+
+	public void setReservada(Boolean reservada) {
+		this.reservada = reservada;
+	}
+
+	public Boolean getAlquilada() {
+		return alquilada;
+	}
+
+	public void setAlquilada(Boolean alquilada) {
+		this.alquilada = alquilada;
+	}
+
+	public EstadoOferta getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoOferta estado) {
+		this.estado = estado;
+	}
 }

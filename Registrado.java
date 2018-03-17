@@ -56,4 +56,11 @@ public abstract class Registrado extends Usuario{
 	    
 	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
 }

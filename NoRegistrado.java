@@ -14,6 +14,5 @@ public class NoRegistrado extends Usuario{
 	public NoRegistrado(){
 		
 	}
-	
 
 }

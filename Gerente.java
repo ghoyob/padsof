@@ -20,4 +20,7 @@ public class Gerente extends Registrado{
         return this.id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

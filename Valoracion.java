@@ -19,6 +19,21 @@ public class Valoracion {
 		return true;
         
     }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Valoracion{" +
+                "valor=" + valor +
+                '}';
+    }
+
+    public ArrayList<Integer> getValor() {
+        return valor;
+    }
+
+    public void setValor(ArrayList<Integer> valor) {
+        this.valor = valor;
+    }
 }
 
 /* object.ouput string... Fichero binario. Usar el flujo de salida de objetos
