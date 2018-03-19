@@ -20,8 +20,8 @@ public class Oferta{
 	private TipoVivienda tipoVivienda;
 	private Valoracion valoraciones; /*mirar lo de arraylist*/
 	private ArrayList<Comentario> comentarios; /*recursividad, solo un comentario, y cada comentario tiene un comentario*/
-	private Fecha fechaIni;
-	private Fecha fechaFin;
+	private Calendar fechaIni;
+	private Calendar fechaFin;
 	private Boolean reservada;
 	private Boolean alquilada;
 	private EstadoOferta estado;
@@ -29,7 +29,7 @@ public class Oferta{
 
 	/*private boolean aceptada;*/
 
-	public Oferta(String nombreOferta,int idVivienda, int CP, int numHabitaciones, String localidad, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Fecha fechaIni, Fecha fechaFin) {
+	public Oferta(String nombreOferta,int idVivienda, int CP, int numHabitaciones, String localidad, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Calendar fechaIni, Calendar fechaFin) {
 
 		this.nombre_oferta = nombreOferta;
 		this.idVivienda = idVivienda;
@@ -63,7 +63,8 @@ public class Oferta{
 	}
 
 	public Boolean reservarOferta(Arrendatario a){
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
+		/*Calendar today = Calendar.getInstance();*/
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO /*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en la reserva");
 			return false;
 		}
@@ -76,7 +77,8 @@ public class Oferta{
 	}
 
 	public Boolean alquilarOferta(Registrado r){
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*||comprobar fechas*/){
+		/*Calendar today = Calendar.getInstance();*/
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en el alquiler");
 			return false;
 		}
@@ -98,6 +100,8 @@ public class Oferta{
 			estado=ACEPTADA;
 			return true;
 		}
+		
+		estado = CAMBIO;
 		return false;
 	}
 
@@ -224,19 +228,19 @@ public class Oferta{
 		this.comentarios = comentarios;
 	}
 
-	public Fecha getFechaIni() {
+	public Calenda getFechaIni() {
 		return fechaIni;
 	}
 
-	public void setFechaIni(Fecha fechaIni) {
+	public void setFechaIni(Calendar fechaIni) {
 		this.fechaIni = fechaIni;
 	}
 
-	public Fecha getFechaFin() {
+	public Calendar getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Fecha fechaFin) {
+	public void setFechaFin(Calendar fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 

@@ -4,21 +4,14 @@ import java.util.List;
 
 /*Mejor un int e ir calculando la media*/
 public class Valoracion {
-    private ArrayList <Integer> valor;
+    private int nValoraciones;
+    private int valor;
     
-    public Valoracion(List<Integer> valor){
-        this.valor = new ArrayList(valor);
+    public Valoracion(int valor){
+        this.valor = valor;
     }
     
-    public boolean ValorarOferta(Oferta o){
-		return true;
-        
-    }
-    
-    public boolean ValorarComentario(Oferta o){
-		return true;
-        
-    }
+    public Boolean
 
     @java.lang.Override
     public java.lang.String toString() {
@@ -27,12 +20,27 @@ public class Valoracion {
                 '}';
     }
 
-    public ArrayList<Integer> getValor() {
+    public int getValor() {
         return valor;
     }
+    
+    public void setValor(int valor){
+        return this.valor = valor;
+    }
 
-    public void setValor(ArrayList<Integer> valor) {
-        this.valor = valor;
+    public void Valorar(int valor) {
+        if (nValoraciones == 0){
+            nValoraciones++;
+            this.valor = valor;
+            return;
+        }
+        
+        else{
+            nValoraciones++;
+            this.valor = (this.valor + valor)/2;
+            return;
+        }
+        
     }
 }
 

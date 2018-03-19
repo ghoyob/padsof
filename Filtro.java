@@ -6,15 +6,18 @@ public class Filtro {
 	private Boolean estadoAlquilado;
 	private Boolean estadoReservado;
 	private int valoracion;
-	private Fecha fechaIni;
-
-	public Filtro(String tipoVivienda, int CP, boolean estadoAlquilado, boolean estadoReservado, int valoracion) {
+	private Calendar fechaIni;
+	private Calendar fechaFin;
+	
+	public Filtro(String tipoVivienda, int CP, boolean estadoAlquilado, boolean estadoReservado, int valoracion, Calendar fechaIni, Calendar fechaFin) {
 	    
 		this.tipoVivienda = tipoVivienda;
 		this.CP = CP;
 		this.estadoAlquilado = estadoAlquilado;
 		this.estadoReservado = estadoReservado;
 		this.valoracion = valoracion;
+		this.fechaIni = fechaIni;
+		this.fechaFin = fechaFin;
 	}
 	
 	public String getTipoVivienda(){
@@ -35,10 +38,6 @@ public class Filtro {
 	
 	public String getEstadoReservado(){
 		return estadoReservado;
-	}
-	
-	public Fecha getFecha(){
-		return fechaIni;
 	}
 
 	public void setCP(int CP) {
@@ -61,11 +60,19 @@ public class Filtro {
 		this.valoracion = valoracion;
 	}
 
-	public Fecha getFechaIni() {
+	public Calendar getFechaIni() {
 		return fechaIni;
 	}
 
-	public void setFechaIni(Fecha fechaIni) {
+	public void setFechaIni(Calendar fechaIni) {
 		this.fechaIni = fechaIni;
+	}
+	
+	public Calendar getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Calendar fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 }
