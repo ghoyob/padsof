@@ -7,44 +7,46 @@ import java.util.*;
 
 public class Arrendador extends Registrado{
 
-    private String numTarjeta;
     private Pago pago;
-    private ArrayList<Oferta> ofertas;
+    private ArrayList<Vivienda> viviendas;
 
-    public Arrendador(String numTarjeta){
-        this.numTarjeta= numTarjeta;
-        ofertas = new ArrayList<Oferta>();
+    public Arrendador(String nombre, String contrasenia, String numTarjeta, TipoUsuario u){
+        viviendas = new ArrayList<Vivienda>();
+        super(nombre, contrasenia, numTarjeta, u);
     }
 
-    public String getNumTarjeta(){
-        return this.numTarjeta;
+    public ArrayList<Vivienda> getVivienda() {
+        return viviendas;
     }
-
-    public ArrayList<Oferta> getOfertas() {
-        return ofertas;
-    }
-
-    public void setNumTarjeta(String numTarjeta){
-        if(numTarjeta == null){
-            System.out.println("Error en el numero de la tarjeta en set en Arrendador.");
-            return;
+    
+    public Boolean addVivienda(Vivienda vivienda){
+        if(vivienda == null){
+            throw new IllegalArgumentException("oferta incorrecta");
         }
-        this.numTarjeta=numTarjeta;
-        return;
-    }
 
+        for(Vivienda viviendaAlmacenada: viviendas){
+            if((viviendaAlmacenada).equals(vivienda)){
+                System.out.println("Error. La vivienda introducida ya esta reservada.");
+                return false;
+            }
+        }
+        viviendas.add(vivienda);
+        return true;
+    }
+    
     public Boolean addOferta(Oferta oferta){
         if(oferta == null){
             throw new IllegalArgumentException("oferta incorrecta");
         }
 
-        for(Oferta ofertaAlmacenada: ofertas){
+        for(Oferta ofertaAlmacenada: viviendas.getOfertas/**//**//**/){
             if((ofertaAlmacenada).equals(oferta)){
                 System.out.println("Error. La oferta introducida ya esta reservada.");
                 return false;
             }
         }
-        ofertas.add(oferta);
+        
+        viviendas.getOfertas.add(oferta);/**//**//**//**//**/
         return true;
     }
 
@@ -56,7 +58,7 @@ public class Arrendador extends Registrado{
         this.pago = pago;
     }
 
-    public void setOfertas(ArrayList<Oferta> ofertas) {
-        this.ofertas = ofertas;
+    public void setVivieda(ArrayList<Vivienda> viviendas) {
+        this.viviendas = viviendas;
     }
 }

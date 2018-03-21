@@ -11,14 +11,23 @@ public abstract class Registrado extends Usuario{
 */
 
 	private String nombre;
+	private String dni;
 	private String contrasenia;
-	private Boolean bloqueado;
+	private boolean bloqueado;
+	private String numTarjeta;
+	
 
-	public Registrado(String nombre, String contrasenia){
+	public Registrado(String nombre, String contrasenia, String numTarjeta, TipoUsuario u){
 		this.nombre=nombre;
 		this.contrasenia=contrasenia;
 		this.bloqueado = false;
+		this.numTarjeta= numTarjeta;
+		super(u);
 		
+	}
+	
+	public String getdni(){
+		return this.dni;
 	}
 	
 	public String getNombre(){
@@ -30,6 +39,20 @@ public abstract class Registrado extends Usuario{
 		return this.contrasenia;
 	}
 	
+	public String getNumTarjeta(){
+        return this.numTarjeta;
+    }
+
+    public void setNumTarjeta(String numTarjeta){
+        if(numTarjeta == null){
+            System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
+            return;
+        }
+
+        this.numTarjeta=numTarjeta;
+        return;
+    }
+	
 	public Boolean getBloqueado(){
 		return this.bloqueado;
 	}
@@ -40,12 +63,13 @@ public abstract class Registrado extends Usuario{
 	
 	public void desbloquearUsuario(Registrado r){
 		
-		if(r == null){
+		if(r == null || r.getTipoUsuario == GERENTE){
 			System.out.println("Error en el nombre al desbloquear usuario.");
 			return; 
 		}
 	    
-	    if(r.bloqueado == true){
+	    else{
+	    	if(r.bloqueado == true){
 	    	r.bloqueado = false;
 	    	System.out.println("Usuario desbloqueado.");
 	    	return;
@@ -53,9 +77,13 @@ public abstract class Registrado extends Usuario{
 	    
 	    System.out.println("El usuario ya estaba desbloqueado.");
 	    return;
-	    
+	    }
 	}
-
+	
+	public void setdni(String dni) {
+		this.dni = dni;
+	}
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}

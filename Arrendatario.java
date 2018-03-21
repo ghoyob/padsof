@@ -10,27 +10,13 @@ public class Arrendatario extends Registrado{
      *También se inicializan las variables
      */
 
-    private String numTarjeta;
+    
     private Pago pago;
     private Oferta oferta;
 
-    public Arrendatario(String numTarjeta){
-        this.numTarjeta = numTarjeta;
+    public Arrendatario(){
     }
 
-    public String getNumTarjeta(){
-        return this.numTarjeta;
-    }
-
-    public void setNumTarjeta(String numTarjeta){
-        if(numTarjeta == null){
-            System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
-            return;
-        }
-
-        this.numTarjeta=numTarjeta;
-        return;
-    }
 
     public Oferta getOferta(){
         return this.oferta;

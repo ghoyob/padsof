@@ -10,10 +10,7 @@ public class Oferta{
 
 	//private static final Class<Valoracion[]>[] Valoracion = null;
 	private String nombreOferta;
-	private int idVivienda;
-	private int CP;
 	private int numHabitaciones;
-	private String localidad;
 	private int precio;
 	private int fianza;
 	private String descripcion;
@@ -29,13 +26,10 @@ public class Oferta{
 
 	/*private boolean aceptada;*/
 
-	public Oferta(String nombreOferta,int idVivienda, int CP, int numHabitaciones, String localidad, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Calendar fechaIni, Calendar fechaFin) {
-
-		this.nombre_oferta = nombreOferta;
-		this.idVivienda = idVivienda;
-		this.CP = CP;
+	public Oferta(String nombreOferta, int numHabitaciones, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Calendar fechaIni, Calendar fechaFin) {
+		
+		this.nombreOferta = nombreOferta;
 		this.numHabitaciones = numHabitaciones;
-		this.localidad = localidad;
 		this.precio = precio;
 		this.fianza = fianza;
 		this.descripcion = descripcion;
@@ -45,26 +39,79 @@ public class Oferta{
 		comentarios = new ArrayList<Comentario>();
 		reservada = false;
 		alquilada = false;
-		estado = PENDIENTE;
+		estado = EstadoOferta.PENDIENTE;
 	}
-
-	public boolean isCPValido(){
-		if(CP == null) return false;
-
-		if(CP<100000 && CP >00000){
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isLocalidadValida(){
-		if(localidad == null) return false;
-		else return true;
+	
+	public Boolean modificarOferta(){
+		 if(estado != EstadoOferta.PENDIENTE){
+		 	throw new IllegalArgumentException("Fallo en la reserva\n");
+			return false;
+		 }
+		 
+		 int numM;
+		 String campo;
+		 String modify;
+		 int modify;
+		 Scanner sc = new Scanner(System.in)
+		 
+		 Sistem.out.print("Campos a modificar:\n -nombreOferta  -numHabitaciones\n -precio  -fianza\n -fechaIni  -fechaFin\n")
+		 Sistem.out.print("Inserte el número de campos a modificar");
+		 while(numM <= 0){
+		 	numM = sc.nextInt();
+		 }
+		 
+		 for(numM; numM != 0; numM--){
+		 	Sistem.out.print("Inserte el campo a modificar: \n")
+			campo = sc.nextLine();
+			
+			if(campo.equals("nombreOferta")){
+				Sistem.out.print("Inserta el nuevo nombre de la oferta\n");
+				modify = sc.nextLine();
+				setNombreOferta(modify);
+			}
+			
+			else if(campo.equals("numHabitaciones")){
+				Sistem.out.print("Inserta el nuevo número de habitaciones\n");
+				modify = sc.nextInt();
+				setNombreOferta(modify);
+			}
+			
+			else if(campo.equals("precio")){
+				Sistem.out.print("Inserta el nuevo precio para la oferta\n");
+				modify = sc.nextInt();
+				setPrecio(modify);
+			}
+			
+			else if(campo.equals("fianza")){
+				Sistem.out.print("Inserta la nueva fianza para la oferta\n");
+				modify = sc.nextInt();
+				setFianza(modify);
+			}
+			
+			/*else if(campo.equals("fechaIni")){
+				Sistem.out.print("Inserta la nueva fecha de inicio de la oferta\n");
+				modify = sc.nextInt();
+				setFianza(modify);
+			}
+			
+			else if(campo.equals("fechaFin")){
+				Sistem.out.print("Inserta la nueva fecha de fin de la oferta\n");
+				modify = sc.nextInt();
+				setFianza(modify);
+			}*/
+			
+			else{
+				Sistem.out.print("El campo introducido no existe\n")
+				numM++;
+			}
+		 }
+		 
+		 return true;
 	}
 
 	public Boolean reservarOferta(Arrendatario a){
 		/*Calendar today = Calendar.getInstance();*/
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO /*|| (a.oferta.getFechaIni()-today) <= 5*/){
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO /*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en la reserva");
 			return false;
 		}
@@ -78,7 +125,7 @@ public class Oferta{
 
 	public Boolean alquilarOferta(Registrado r){
 		/*Calendar today = Calendar.getInstance();*/
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != ARRENDATARIO/*|| (a.oferta.getFechaIni()-today) <= 5*/){
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO/*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en el alquiler");
 			return false;
 		}
@@ -91,27 +138,27 @@ public class Oferta{
 	}
 
 	public Boolean aprobarOferta (Gerente g){
-		if(g.getTipoUsuario() != GERENTE){
+		if(g.getTipoUsuario() != EstadoOferta.GERENTE){
 			throw new IllegalArgumentException("oferta incorrecta");
 			return false;
 		}
 
-		if(isCPValido()==true && numHabitaciones>0 && isLocalidadValida()==true && precio>0 && fianza>0 && descripcion != null && nombreOferta != null){
-			estado=ACEPTADA;
+		if(numHabitaciones>0 && precio>0 && fianza>0 && descripcion != null && nombreOferta != null && tipoVivienda != null && fechaIni != null && fechaFin != null){
+			estado=EstadoOferta.ACEPTADA;
 			return true;
 		}
 		
-		estado = CAMBIO;
+		estado = EstadoOferta.CAMBIO;
 		return false;
 	}
 
 	public Boolean rechazarOferta (){
-		estado = RECHAZADA;
+		estado = EstadoOferta.RECHAZADA;
 		return false;
 	}
 
 	public Boolean cambiarOferta (){
-		estado = CAMBIO;
+		estado = EstadoOferta.CAMBIO;
 		return false;
 	}
 
@@ -148,36 +195,12 @@ public class Oferta{
 		this.nombreOferta = nombreOferta;
 	}
 
-	public int getIdVivienda() {
-		return idVivienda;
-	}
-
-	public void setIdVivienda(int idVivienda) {
-		this.idVivienda = idVivienda;
-	}
-
-	public int getCP() {
-		return CP;
-	}
-
-	public void setCP(int CP) {
-		this.CP = CP;
-	}
-
 	public int getNumHabitaciones() {
 		return numHabitaciones;
 	}
 
 	public void setNumHabitaciones(int numHabitaciones) {
 		this.numHabitaciones = numHabitaciones;
-	}
-
-	public String getLocalidad() {
-		return localidad;
-	}
-
-	public void setLocalidad(String localidad) {
-		this.localidad = localidad;
 	}
 
 	public int getPrecio() {
@@ -228,7 +251,7 @@ public class Oferta{
 		this.comentarios = comentarios;
 	}
 
-	public Calenda getFechaIni() {
+	public Calendar getFechaIni() {
 		return fechaIni;
 	}
 

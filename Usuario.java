@@ -11,12 +11,16 @@ public abstract class Usuario{
 */
 	private TipoUsuario u;
 
-	public Usuario(){
-		
+	public Usuario(TipoUsuario u){
+		this.u = u;
 	}
 	
 	public TipoUsuario getTipoUsuario(){
 		return this.u;
+	}
+	
+	public void setTipoUsuario(TipoUsuario u){
+		this.u = u;
 	}
 
 }
