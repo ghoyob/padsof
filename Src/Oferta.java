@@ -45,47 +45,46 @@ public class Oferta{
 	public Boolean modificarOferta(){
 		 if(estado != EstadoOferta.PENDIENTE){
 		 	throw new IllegalArgumentException("Fallo en la reserva\n");
-			return false;
 		 }
 		 
-		 int numM;
+		 int numM = 0;
 		 String campo;
 		 String modify;
-		 int modify;
-		 Scanner sc = new Scanner(System.in)
+		 int modi;
+		 Scanner sc = new Scanner(System.in);
 		 
-		 Sistem.out.print("Campos a modificar:\n -nombreOferta  -numHabitaciones\n -precio  -fianza\n -fechaIni  -fechaFin\n")
-		 Sistem.out.print("Inserte el número de campos a modificar");
+		 System.out.print("Campos a modificar:\n -nombreOferta  -numHabitaciones\n -precio  -fianza\n -fechaIni  -fechaFin\n");
+		 System.out.print("Inserte el número de campos a modificar");
 		 while(numM <= 0){
 		 	numM = sc.nextInt();
 		 }
 		 
-		 for(numM; numM != 0; numM--){
-		 	Sistem.out.print("Inserte el campo a modificar: \n")
+		 for(; numM != 0; numM--){
+		 	System.out.print("Inserte el campo a modificar: \n");
 			campo = sc.nextLine();
 			
 			if(campo.equals("nombreOferta")){
-				Sistem.out.print("Inserta el nuevo nombre de la oferta\n");
+				System.out.print("Inserta el nuevo nombre de la oferta\n");
 				modify = sc.nextLine();
 				setNombreOferta(modify);
 			}
 			
 			else if(campo.equals("numHabitaciones")){
-				Sistem.out.print("Inserta el nuevo número de habitaciones\n");
-				modify = sc.nextInt();
-				setNombreOferta(modify);
+				System.out.print("Inserta el nuevo número de habitaciones\n");
+				modi = sc.nextInt();
+				setNumHabitaciones(modi);
 			}
 			
 			else if(campo.equals("precio")){
-				Sistem.out.print("Inserta el nuevo precio para la oferta\n");
-				modify = sc.nextInt();
-				setPrecio(modify);
+				System.out.print("Inserta el nuevo precio para la oferta\n");
+				modi = sc.nextInt();
+				setPrecio(modi);
 			}
 			
 			else if(campo.equals("fianza")){
-				Sistem.out.print("Inserta la nueva fianza para la oferta\n");
-				modify = sc.nextInt();
-				setFianza(modify);
+				System.out.print("Inserta la nueva fianza para la oferta\n");
+				modi = sc.nextInt();
+				setFianza(modi);
 			}
 			
 			/*else if(campo.equals("fechaIni")){
@@ -101,7 +100,7 @@ public class Oferta{
 			}*/
 			
 			else{
-				Sistem.out.print("El campo introducido no existe\n")
+				System.out.print("El campo introducido no existe\n");
 				numM++;
 			}
 		 }
@@ -109,40 +108,35 @@ public class Oferta{
 		 return true;
 	}
 
+
+    /*MIRAR ESTA Y LA SIGUIENTE PORQUE... /*HE AÑADIDO EL CAMPO AR A ARENDATARIO QUE SIGNIFICA OFERTA ALQUILADA/REVERVADA, Y LA OTRA OFERTA ES LA QUE ESTA MIRANDO /*/
 	public Boolean reservarOferta(Arrendatario a){
 		/*Calendar today = Calendar.getInstance();*/
 		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO /*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en la reserva");
-			return false;
 		}
 		else{
 			reservada = true;
-			a.setOferta(oferta);
+			a.setOfertaAR(a.getOfertaVista());
 			System.out.println("Oferta Reservada, dispone de un plazo de 5 días.");
 			return true;
 		}
 	}
 
-	public Boolean alquilarOferta(Registrado r){
+	public Boolean alquilarOferta(Arrendatario a){
 		/*Calendar today = Calendar.getInstance();*/
 		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO/*|| (a.oferta.getFechaIni()-today) <= 5*/){
 			throw new IllegalArgumentException("Fallo en el alquiler");
-			return false;
 		}
 		else{
 			alquilada = true;
-			a.setOferta(oferta);
+			a.setOfertaAR(a.getOfertaVista());
 			System.out.println("Oferta Alquilada, disfrute de su estancia.");
-			return true
+			return true;
 		}
 	}
 
-	public Boolean aprobarOferta (Gerente g){
-		if(g.getTipoUsuario() != EstadoOferta.GERENTE){
-			throw new IllegalArgumentException("oferta incorrecta");
-			return false;
-		}
-
+	public boolean aprobarOferta (Gerente g){
 		if(numHabitaciones>0 && precio>0 && fianza>0 && descripcion != null && nombreOferta != null && tipoVivienda != null && fechaIni != null && fechaFin != null){
 			estado=EstadoOferta.ACEPTADA;
 			return true;
@@ -152,22 +146,18 @@ public class Oferta{
 		return false;
 	}
 
-	public Boolean rechazarOferta (){
+	public boolean rechazarOferta (){
 		estado = EstadoOferta.RECHAZADA;
 		return false;
 	}
 
-	public Boolean cambiarOferta (){
+	public boolean cambiarOferta (){
 		estado = EstadoOferta.CAMBIO;
 		return false;
 	}
 
-	public int CalcularBeneficio (){
-		return beneficio;
 
-	}
-
-	public Boolean addComentario(Comentario comentario){
+	public boolean addComentario(Comentario comentario){
 		if(comentario == null){
 			throw new IllegalArgumentException("comentario incorrecto");
 		}
@@ -177,13 +167,12 @@ public class Oferta{
 		return true;
 	}
 
-	public Boolean valorarOferta(int valor){
+	public boolean valorarOferta(int valor){
 		if(valor>6 || valor<1){
 			throw new IllegalArgumentException("valor incorrecta");
-			return false;
 		}
 
-		valoracion.Valorar(valor);
+		valoraciones.Valorar(valor);
 		return true;
 	}
 

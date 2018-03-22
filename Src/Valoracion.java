@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
-
 /*Mejor un int e ir calculando la media*/
 public class Valoracion {
     private int nValoraciones;
@@ -9,36 +5,34 @@ public class Valoracion {
     
     public Valoracion(int valor){
         this.valor = valor;
-    }
-    
-    public Boolean
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Valoracion{" +
-                "valor=" + valor +
-                '}';
+        this.nValoraciones = 0;
     }
 
     public int getValor() {
         return valor;
     }
     
-    public void setValor(int valor){
+    public int setValor(int valor){
         return this.valor = valor;
+    }
+
+    public int getnValoraciones() {
+        return nValoraciones;
+    }
+
+    public void setnValoraciones(int nValoraciones) {
+        this.nValoraciones = nValoraciones;
     }
 
     public void Valorar(int valor) {
         if (nValoraciones == 0){
             nValoraciones++;
             this.valor = valor;
-            return;
         }
         
         else{
             nValoraciones++;
             this.valor = (this.valor + valor)/2;
-            return;
         }
         
     }

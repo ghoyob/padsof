@@ -6,7 +6,7 @@ import java.util.*;
  */
 
 /*SI LOS DATOS DE LA VIVIENDA ESTAM BIEN LA ACEPTAS, AUNQUE HAYA OFERTAS QUE NO ESTÉN ACEPTADAS*/
-public class Vivienda
+public class Vivienda{
 
 	//private static final Class<Valoracion[]>[] Valoracion = null;
 	private String nombreVivienda;
@@ -15,15 +15,17 @@ public class Vivienda
 	private String localidad;
 	private ArrayList<Oferta> ofertas;
 	private EstadoOferta estado;
+	private int numO;
 	/*private boolean aceptada;*/
 
-	public Oferta(String nombreVivienda, int idVivienda, int CP, String localidad) {
+	public Vivienda(String nombreVivienda, int idVivienda, int CP, String localidad) {
 		this.nombreVivienda = nombreVivienda;
 		this.idVivienda = idVivienda;
 		this.CP = CP;
 		this.localidad = localidad;
 		ofertas = new ArrayList<Oferta>();
-		estado = EstadoOferta.PENDIENTE 
+		estado = EstadoOferta.PENDIENTE;
+		numO = 0;
 	}
 	
 	public Boolean añadirOferta(Oferta o){
@@ -31,15 +33,14 @@ public class Vivienda
 			throw new IllegalArgumentException("Oferta incorrecta");
 		}
 
+		numO++;
 		ofertas.add(o);
 		System.out.println("Oferta añadida.");
 		return true;
 	}
 
 	public boolean isCPValido(){
-		if(CP == null) return false;
-
-		if(CP<100000 && CP >00000){
+		if(CP<53000 && CP >999){
 			return true;
 		}
 		return false;
@@ -51,7 +52,7 @@ public class Vivienda
 	}
 	
 	public String getNombreVivienda() {
-		return nombreOferta;
+		return nombreVivienda;
 	}
 
 	public void setNombreVivienda(String nombreVivienda) {
@@ -89,20 +90,33 @@ public class Vivienda
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
-	
-	public Boolean aprobarVivienda (Gerente g){
-		if(g.getTipoUsuario() != tipoUsuario.GERENTE){
-			throw new IllegalArgumentException("Vivienda incorrecta");
-			return false;
-		}
 
-		if(isCPValido()==true && isLocalidadValida()==true && nombreVivienda != null && idVivienda != null){
+    public EstadoOferta getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoOferta estado) {
+        this.estado = estado;
+    }
+
+    public boolean aprobarVivienda (Gerente g){
+		if(g.getTipoUsuario() != TipoUsuario.GERENTE){
+			throw new IllegalArgumentException("Vivienda incorrecta");
+        }
+
+		if((isCPValido() == true) && (isLocalidadValida() == true) && (nombreVivienda != null)){
 			estado = EstadoOferta.ACEPTADA;
             return true;
 		}
 		
 		return false;
 	}
-	
-	
+
+    public int getNumO() {
+        return numO;
+    }
+
+    public void setNumO(int numO) {
+        this.numO = numO;
+    }
 }

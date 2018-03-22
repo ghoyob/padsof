@@ -3,6 +3,6 @@
  *
  */ 
 
-public enum Vivienda{
+public enum TipoVivienda{
         VACACIONAL, RESIDENCIAL
     }

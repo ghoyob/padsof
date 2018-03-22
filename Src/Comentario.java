@@ -38,7 +38,7 @@ public class Comentario{
         return valoracion;
     }
 
-    public Boolean comentarComentario(text){
+    public Boolean comentarComentario(String text){
         Comentario c = new Comentario(text);
         this.comentario = c;
         return true;
@@ -47,7 +47,6 @@ public class Comentario{
     public Boolean valorarComentario(int valor){
         if(valor>6 || valor<1){
             throw new IllegalArgumentException("valoracion incorrecto");
-            return false;
         }
 
         valoracion.Valorar(valor);

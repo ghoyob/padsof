@@ -12,10 +12,20 @@ public class Gerente{
     private String nombre;
 	private String contrasenia;
     private Integer id;
+    private TipoUsuario tipoUsuario;
 
-	public Gerente(int id){
+	public Gerente(int id, TipoUsuario tipoUsuario){
 		this.id = id;
-	}
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
 
     public Integer getId(){
         return this.id;
@@ -40,4 +50,6 @@ public class Gerente{
 	public void setContrasenia(String contrasenia) {
 		this.contrasenia = contrasenia;
 	}
+
+
 }

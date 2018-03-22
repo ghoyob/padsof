@@ -3,7 +3,7 @@
  *
  */
 
-public abstract class Registrado extends Usuario{
+public class Registrado extends Usuario{
 
 /* 
    * Declaración de los atributos de las clases.
@@ -17,16 +17,18 @@ public abstract class Registrado extends Usuario{
 	private String numTarjeta;
 	
 
-	public Registrado(String nombre, String contrasenia, String numTarjeta, TipoUsuario u){
+	public Registrado(String dni, String nombre, String contrasenia, String numTarjeta, TipoUsuario u){
+        super(u);
+	    this.dni = dni;
 		this.nombre=nombre;
 		this.contrasenia=contrasenia;
 		this.bloqueado = false;
 		this.numTarjeta= numTarjeta;
-		super(u);
+		
 		
 	}
 	
-	public String getdni(){
+	public String getDni(){
 		return this.dni;
 	}
 	
@@ -53,17 +55,17 @@ public abstract class Registrado extends Usuario{
         return;
     }
 	
-	public Boolean getBloqueado(){
+	public boolean getBloqueado(){
 		return this.bloqueado;
 	}
 	
-	public void setBloqueado(Boolean bloqueado){
+	public void setBloqueado(boolean bloqueado){
 		this.bloqueado=bloqueado;
 	}
 	
 	public void desbloquearUsuario(Registrado r){
 		
-		if(r == null || r.getTipoUsuario == GERENTE){
+		if(r == null || r.getTipoUsuario() == TipoUsuario.GERENTE){
 			System.out.println("Error en el nombre al desbloquear usuario.");
 			return; 
 		}
@@ -80,7 +82,7 @@ public abstract class Registrado extends Usuario{
 	    }
 	}
 	
-	public void setdni(String dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	

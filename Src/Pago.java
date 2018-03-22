@@ -30,7 +30,7 @@ public class Pago{
         else{
             if (r.getBloqueado() == false){
                 System.out.println("Usuario bloqueado.");
-                r.getBloqueado() = true;
+                r.setBloqueado(true);
                 return;
             }
             

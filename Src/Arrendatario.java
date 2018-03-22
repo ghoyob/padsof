@@ -12,22 +12,24 @@ public class Arrendatario extends Registrado{
 
     
     private Pago pago;
-    private Oferta oferta;
+    private Oferta ofertaVista;
+    private Oferta AR;
 
-    public Arrendatario(){
+    public Arrendatario(String dni, String nombre, String contrasenia, String numTarjeta, TipoUsuario u){
+        super(dni, nombre, contrasenia, numTarjeta, u);
     }
 
 
-    public Oferta getOferta(){
-        return this.oferta;
+    public Oferta getOfertaVista(){
+        return this.ofertaVista;
     }
 
-    public void setOferta(Oferta oferta){
+    public void setOfertaVista(Oferta oferta){
         if(oferta == null){
             System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
         }
 
-        this.oferta=oferta;
+        this.ofertaVista=oferta;
     }
 
     public Pago getPago() {
@@ -36,5 +38,13 @@ public class Arrendatario extends Registrado{
 
     public void setPago(Pago pago) {
         this.pago = pago;
+    }
+
+    public Oferta getOfertaAR() {
+        return AR;
+    }
+
+    public void setOfertaAR(Oferta AR) {
+        this.AR = AR;
     }
 }
