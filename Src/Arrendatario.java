@@ -25,10 +25,6 @@ public class Arrendatario extends Registrado{
     }
 
     public void setOfertaVista(Oferta oferta){
-        if(oferta == null){
-            System.out.println("Error en el numero de la tarjeta en set en Arrendatario.");
-        }
-
         this.ofertaVista=oferta;
     }
 

@@ -29,12 +29,12 @@ public class Aplicacion{
 	
 	public Boolean añadirVivienda(Vivienda v){
 		if(v == null || v.getEstado() != EstadoOferta.ACEPTADA){
-			throw new IllegalArgumentException("Oferta incorrecto");
+			throw new IllegalArgumentException("Vivienda incorrecta");
 		}
 
 		viviendas.add(v);
 		nVivs++;
-		System.out.println("Oferta añadida.");
+		System.out.println("Vivienda añadida.");
 		return true;
 	}
 
