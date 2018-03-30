@@ -1,4 +1,5 @@
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Date;
 
 public class Filtro {
@@ -8,11 +9,11 @@ public class Filtro {
 	private boolean estadoAlquilado;
 	private boolean estadoReservado;
 	private int valoracion;
-	private Date fechaIni;
-	private Date fechaFin;
+	private LocalDate fechaIni;
+	private LocalDate fechaFin;
 	private TipoUsuario tipoUsuario;
 	
-	public Filtro(TipoVivienda tipoVivienda, int CP, boolean estadoAlquilado, boolean estadoReservado, int valoracion, Date fechaIni, Date fechaFin) {
+	public Filtro(TipoVivienda tipoVivienda, int CP, boolean estadoAlquilado, boolean estadoReservado, int valoracion, LocalDate fechaIni, LocalDate fechaFin) {
 	    
 		this.tipoVivienda = tipoVivienda;
 		this.CP = CP;
@@ -90,19 +91,19 @@ public class Filtro {
 		this.valoracion = valoracion;
 	}
 
-	public Date getFechaIni() {
+	public LocalDate getFechaIni() {
 		return fechaIni;
 	}
 
-	public void setFechaIni(Date fechaIni) {
+	public void setFechaIni(LocalDate fechaIni) {
 		this.fechaIni = fechaIni;
 	}
 	
-	public Date getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 }

@@ -38,13 +38,13 @@ public class Comentario{
         return valoracion;
     }
 
-    public Boolean comentarComentario(String text){
+    public boolean comentarComentario(String text){
         Comentario c = new Comentario(text);
         this.comentario = c;
         return true;
     }
 
-    public Boolean valorarComentario(int valor){
+    public boolean valorarComentario(int valor){
         if(valor>6 || valor<1){
             throw new IllegalArgumentException("valoracion incorrecto");
         }

@@ -1,4 +1,7 @@
-import java.util.*;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Aurora Perez y Guillermo Hoyo
@@ -17,16 +20,17 @@ public class Oferta{
 	private TipoVivienda tipoVivienda;
 	private Valoracion valoraciones; /*mirar lo de arraylist*/
 	private ArrayList<Comentario> comentarios; /*recursividad, solo un comentario, y cada comentario tiene un comentario*/
-	private Calendar fechaIni;
-	private Calendar fechaFin;
-	private Boolean reservada;
-	private Boolean alquilada;
+    private int nComentarios = 0;
+	private LocalDate fechaIni;
+	private LocalDate fechaFin;
+	private boolean reservada;
+	private boolean alquilada;
 	private EstadoOferta estado;
 
 
 	/*private boolean aceptada;*/
 
-	public Oferta(String nombreOferta, int numHabitaciones, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, Calendar fechaIni, Calendar fechaFin) {
+	public Oferta(String nombreOferta, int numHabitaciones, int precio, int fianza, String descripcion, TipoVivienda tipoVivienda, LocalDate fechaIni, LocalDate fechaFin) {
 		
 		this.nombreOferta = nombreOferta;
 		this.numHabitaciones = numHabitaciones;
@@ -52,12 +56,16 @@ public class Oferta{
 		 String modify;
 		 int modi;
 		 Scanner sc = new Scanner(System.in);
-		 
+
 		 System.out.print("Campos a modificar:\n -nombreOferta  -numHabitaciones\n -precio  -fianza\n -fechaIni  -fechaFin\n");
-		 System.out.print("Inserte el número de campos a modificar");
-		 while(numM <= 0){
+		 System.out.print("Inserte el número de campos a modificar, introduzca 0 para salir");
+		 while(numM < 0){
 		 	numM = sc.nextInt();
 		 }
+
+		 if(numM == 0){
+		     return true;
+         }
 		 
 		 for(; numM != 0; numM--){
 		 	System.out.print("Inserte el campo a modificar: \n");
@@ -82,22 +90,32 @@ public class Oferta{
 			}
 			
 			else if(campo.equals("fianza")){
-				System.out.print("Inserta la nueva fianza para la oferta\n");
+				System.out.print("Inserta la nueva fianza para la oferta");
 				modi = sc.nextInt();
 				setFianza(modi);
 			}
 			
-			/*else if(campo.equals("fechaIni")){
-				Sistem.out.print("Inserta la nueva fecha de inicio de la oferta\n");
-				modify = sc.nextInt();
-				setFianza(modify);
+			else if(campo.equals("fechaIni")){
+				System.out.print("Inserta la nueva fecha de inicio de la oferta DD\MM\YYYY\n");
+				modi = sc.nextInt();
+				int x = modi;
+				modi = sc.nextInt();
+				int c = modi;
+				modi = sc.nextInt();
+				int z = modi;
+				fechaIni = LocalDate.now().withDayOfMonth(x).withMonth(c).withYear(z);
 			}
-			
-			else if(campo.equals("fechaFin")){
-				Sistem.out.print("Inserta la nueva fecha de fin de la oferta\n");
-				modify = sc.nextInt();
-				setFianza(modify);
-			}*/
+
+            else if(campo.equals("fechaFin")){
+                System.out.print("Inserta la nueva fecha fin de la oferta DD\MM\YYYY\n");
+                modi = sc.nextInt();
+                int x = modi;
+                modi = sc.nextInt();
+                int c = modi;
+                modi = sc.nextInt();
+                int z = modi;
+                fechaFin = LocalDate.now().withDayOfMonth(x).withMonth(c).withYear(z);
+            }
 			
 			else{
 				System.out.print("El campo introducido no existe\n");
@@ -111,8 +129,8 @@ public class Oferta{
 
     /*MIRAR ESTA Y LA SIGUIENTE PORQUE... /*HE AÑADIDO EL CAMPO AR A ARENDATARIO QUE SIGNIFICA OFERTA ALQUILADA/REVERVADA, Y LA OTRA OFERTA ES LA QUE ESTA MIRANDO /*/
 	public Boolean reservarOferta(Arrendatario a){
-		/*Calendar today = Calendar.getInstance();*/
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO /*|| (a.oferta.getFechaIni()-today) <= 5*/){
+		LocalDate today = LocalDate.now();
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO || (a.getOfertaVista().getFechaIni().compareTo(today)) == 0){
 			throw new IllegalArgumentException("Fallo en la reserva");
 		}
 		else{
@@ -124,9 +142,9 @@ public class Oferta{
 	}
 
 	public Boolean alquilarOferta(Arrendatario a){
-		/*Calendar today = Calendar.getInstance();*/
-		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO/*|| (a.oferta.getFechaIni()-today) <= 5*/){
-			throw new IllegalArgumentException("Fallo en el alquiler");
+        LocalDate today = LocalDate.now();
+		if(alquilada == true || reservada == true || a.getTipoUsuario() != TipoUsuario.ARRENDATARIO || (a.getOfertaVista().getFechaIni().compareTo(today)) == 0){
+            throw new IllegalArgumentException("Fallo en la operacion");
 		}
 		else{
 			alquilada = true;
@@ -137,7 +155,7 @@ public class Oferta{
 	}
 
 	public boolean aprobarOferta (Gerente g){
-		if(numHabitaciones>0 && precio>0 && fianza>0 && descripcion != null && nombreOferta != null && tipoVivienda != null && fechaIni != null && fechaFin != null){
+		if( g.getTipoUsuario() != TipoUsuario.GERENTE || numHabitaciones>0 && precio>0 && fianza>0 && descripcion != null && nombreOferta != null && tipoVivienda != null && fechaIni != null && fechaFin != null){
 			estado=EstadoOferta.ACEPTADA;
 			return true;
 		}
@@ -146,26 +164,36 @@ public class Oferta{
 		return false;
 	}
 
-	public boolean rechazarOferta (){
+	public boolean rechazarOferta (Gerente g){
 		estado = EstadoOferta.RECHAZADA;
-		return false;
+		return true;
 	}
 
-	public boolean cambiarOferta (){
+	public boolean cambiarOferta (Gerente g){
 		estado = EstadoOferta.CAMBIO;
-		return false;
+		return true;
 	}
 
 
 	public boolean addComentario(Comentario comentario){
-		if(comentario == null){
+		if(comentario == null || nComentarios < 0){
 			throw new IllegalArgumentException("comentario incorrecto");
 		}
 
-		comentarios.add(comentario);
-		System.out.println("Comentario añadido.");
-		return true;
-	}
+		if(nComentarios == 0){
+            comentarios.add(comentario);
+            System.out.println("Comentario añadido.");
+            nComentarios++;
+            return true;
+        }
+
+        else{
+		    comentarios.add(comentario);
+		    System.out.println("Comentario añadido.");
+		    nComentarios++;
+		    return true;
+        }
+    }
 
 	public boolean valorarOferta(int valor){
 		if(valor>6 || valor<1){
@@ -240,19 +268,19 @@ public class Oferta{
 		this.comentarios = comentarios;
 	}
 
-	public Calendar getFechaIni() {
+	public LocalDate getFechaIni() {
 		return fechaIni;
 	}
 
-	public void setFechaIni(Calendar fechaIni) {
+	public void setFechaIni(LocalDate fechaIni) {
 		this.fechaIni = fechaIni;
 	}
 
-	public Calendar getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Calendar fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
@@ -279,4 +307,28 @@ public class Oferta{
 	public void setEstado(EstadoOferta estado) {
 		this.estado = estado;
 	}
+
+    public int getnComentarios() {
+        return nComentarios;
+    }
+
+    public void setnComentarios(int nComentarios) {
+        this.nComentarios = nComentarios;
+    }
+
+    public boolean isReservada() {
+        return reservada;
+    }
+
+    public void setReservada(boolean reservada) {
+        this.reservada = reservada;
+    }
+
+    public boolean isAlquilada() {
+        return alquilada;
+    }
+
+    public void setAlquilada(boolean alquilada) {
+        this.alquilada = alquilada;
+    }
 }

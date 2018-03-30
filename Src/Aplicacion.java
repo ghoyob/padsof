@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
@@ -26,7 +27,7 @@ public class Aplicacion{
 		nVivs = 0;
 
 	}
-	
+
 	public Boolean añadirVivienda(Vivienda v){
 		if(v == null || v.getEstado() != EstadoOferta.ACEPTADA){
 			throw new IllegalArgumentException("Vivienda incorrecta");
@@ -38,7 +39,7 @@ public class Aplicacion{
 		return true;
 	}
 
-    
+
     public boolean cargarDatos(String fichero) throws FileNotFoundException {
     	if(fichero == null){
     		throw new IllegalArgumentException("Fallo en la reserva\n");
@@ -48,13 +49,13 @@ public class Aplicacion{
     	String linea;
     	String campos[];
     	String datos[];
-    	
+
     	File file = new File(fichero);
-    	
+
     	Scanner sc = new Scanner(file);
     	linea = sc.nextLine();
     	campos = linea.split(";");
-    	
+
     	while((linea = sc.nextLine()) != null){
     		datos = linea.split(";");
     		if(datos[0].equals("O")){
@@ -71,50 +72,58 @@ public class Aplicacion{
     		registrados.add(r);
     		nRegs++;
     	}
-    	
+
     	return true;
     	/*0 = ROL, 1 = NIF, 2 = FULL NAME, 3 = PASSWORD, 4 = CREDIT CARD*/
     }
-    
+
     public boolean login(String dni, String contrasenia){
-    	
+
     	for(int i = 0; i < nRegs; i++){
     		if(registrados.get(i).getDni().equals(dni) && registrados.get(i).getContrasenia().equals(contrasenia)){
     			registradoActual = registrados.get(i);
     			return true;
     		}
     	}
-    	
+
     	throw new IllegalArgumentException("Usuario/Contraseña incorrecto/a\n");
     }
-    
-    
+
+
     public void logout(Registrado registradoActual){
     	registradoActual = null;
     }
-    
+
     public boolean modificarTarjeta(Registrado r){
+        int i = 0;
     	if(r.getNombre() == null || r.getTipoUsuario() == TipoUsuario.GERENTE) return false;
-    	
+
     	String newNumT;
     	Scanner sc = new Scanner(System.in);
-    	
+
     	System.out.print("Inserte su número de tarjeta\n");
     	newNumT = sc.nextLine();
-    	
+
     	while(newNumT.length() < 16){
 			System.out.print("Inserte su número de tarjeta\n");
-    		newNumT = sc.nextLine();	
+    		newNumT = sc.nextLine();
     	}
- 
-    	r.setNumTarjeta(newNumT);
-    	
-    	sc.close();
-    	return true;
-    	
+
+    	for(; true != registrados.get(i).getNumTarjeta().equals(newNumT); i++){
+        }
+
+        if(true == registrados.get(i).getNumTarjeta().equals(newNumT)){
+            r.setNumTarjeta(newNumT);
+            sc.close();
+            return true;
+        }
+
+        sc.close();
+        return false;
+
     }
-    
-    public ArrayList<Oferta> Buscar(ArrayList<Oferta> ofertas){
+
+    public ArrayList<Oferta> Buscar(){
     	ArrayList<Oferta> o = new ArrayList<Oferta>();
     	Filtro f = new Filtro();
     	Scanner sc = new Scanner(System.in);
@@ -126,6 +135,7 @@ public class Aplicacion{
     	    while(!scannerF.equals("TipoVivienda") || !scannerF.equals("CP") || !scannerF.equals("FechaInicio")) {
                 System.out.print("Usted tiene acceso a los siguientes filtros: \n\t-TipoVivienda(Vacacional/Residencial)\n\t-CP\n\t-FechaInicio\n");
                 System.out.print("Introduzca el filtro a modificar: \n");
+                System.out.print("");
                 scannerF = sc.nextLine();
                 if (scannerF.equals("TipoVivienda")) {
                     while (!scannerC.equals("Vacacional") || !scannerC.equals("Residencial")) {
@@ -170,12 +180,31 @@ public class Aplicacion{
                     }
                 }
 
-                /*PUTAS FECHAS BRROOO.  SKRRRR*/
-                /*if(scannerF.equals("FechaInicio")){
+                if(scannerF.equals("FechaInicio")){
+                    System.out.print("A continuacion escriba el día, el mes y el año de la fecha deseada DD\MM\YYYY");
+                    scannerI = sc.nextInt();
+                    int x = scannerI;
 
-                }*//*/*//*/*//*/*///**/*/*/*/*/*//***///***/*/*//*//*/*/*/*/*/*/***//*/*/*//*/*
+                    scannerI = sc.nextInt();
+                    int c = scannerI;
+
+                    scannerI = sc.nextInt();
+                    int z = scannerI;
+
+                        LocalDate dia = LocalDate.now().withDayOfMonth(x).withMonth(c).withYear(z);
+
+
+
+                    for(int i = 0; i < nVivs; i++){
+                        for(int j = 0; j < viviendas.get(i).getNumO(); j++){
+                            if(dia.compareTo(viviendas.get(i).getOfertas().get(j).getFechaIni()) == 0 && viviendas.get(i).getEstado() == EstadoOferta.ACEPTADA){
+                                o.add(viviendas.get(i).getOfertas().get(j));
+                            }
+                        }
+                    }
+
+                }
             }
-            /*COMO HACER QUE PUEDA FILTRAR POR MAS COSAS*/
             sc.close();
             return o;
         }
@@ -229,10 +258,30 @@ public class Aplicacion{
                 }
             }
 
-            /*PUTAS FECHAS BRROOO.  SKRRRR*/
-                /*if(scannerF.equals("FechaInicio")){
+            if(scannerF.equals("FechaInicio")){
+                System.out.print("A continuacion escriba el día, el mes y el año de la fecha deseada DD\MM\YYYY");
+                scannerI = sc.nextInt();
+                int x = scannerI;
 
-                }*//*/*//*/*//*/*///**/*/*/*/*/*//***///***/*/*//*//*/*/*/*/*/*/***//*/*/*//*/*
+                scannerI = sc.nextInt();
+                int c = scannerI;
+
+                scannerI = sc.nextInt();
+                int z = scannerI;
+
+                LocalDate dia = LocalDate.now().withDayOfMonth(x).withMonth(c).withYear(z);
+
+
+
+                for(int i = 0; i < nVivs; i++){
+                    for(int j = 0; j < viviendas.get(i).getNumO(); j++){
+                        if(dia.compareTo(viviendas.get(i).getOfertas().get(j).getFechaIni()) == 0 && viviendas.get(i).getEstado() == EstadoOferta.ACEPTADA){
+                            o.add(viviendas.get(i).getOfertas().get(j));
+                        }
+                    }
+                }
+
+            }
 
             if(scannerF.equals("Valoracion")){
                 while(!isValoracionValida(scannerI)){
