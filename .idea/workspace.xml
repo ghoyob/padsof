@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de99d546-598d-43c8-a0b6-dd8d7661983e" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/Guille.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Src/Demostrador.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/padsof.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Src/Aplicacion.java" afterPath="$PROJECT_DIR$/Src/Aplicacion.java" />
-      <change beforePath="$PROJECT_DIR$/Src/Comentario.java" afterPath="$PROJECT_DIR$/Src/Comentario.java" />
-      <change beforePath="$PROJECT_DIR$/Src/Filtro.java" afterPath="$PROJECT_DIR$/Src/Filtro.java" />
-      <change beforePath="$PROJECT_DIR$/Src/Oferta.java" afterPath="$PROJECT_DIR$/Src/Oferta.java" />
-      <change beforePath="$PROJECT_DIR$/Test/AplicacionTest.java" afterPath="$PROJECT_DIR$/Test/AplicacionTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/ArrendadorTest.java" afterPath="$PROJECT_DIR$/Test/ArrendadorTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/ArrendatarioTest.java" afterPath="$PROJECT_DIR$/Test/ArrendatarioTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/FiltroTest.java" afterPath="$PROJECT_DIR$/Test/FiltroTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/GerenteTest.java" afterPath="$PROJECT_DIR$/Test/GerenteTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/OfertaTest.java" afterPath="$PROJECT_DIR$/Test/OfertaTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/RegistradoTest.java" afterPath="$PROJECT_DIR$/Test/RegistradoTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/UsuarioTest.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +32,7 @@
       <file leaf-file-name="Oferta.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Src/Oferta.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
+            <state relative-caret-position="1659">
               <caret line="220" column="5" lean-forward="true" selection-start-line="220" selection-start-column="5" selection-end-line="220" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -482,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522338527507</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Modificado lo de las fechas e introducida su respectiva carpeta, junto con la del telecharge">
+      <created>1522422900999</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1522422900999</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -877,7 +868,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Src/Oferta.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
+        <state relative-caret-position="1659">
           <caret line="220" column="5" lean-forward="true" selection-start-line="220" selection-start-column="5" selection-end-line="220" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
